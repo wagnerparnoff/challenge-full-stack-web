@@ -13,6 +13,9 @@ import App from './App.vue'
 // Composables
 import { createApp } from 'vue'
 
+//Services
+// import * as services from './services'
+
 const app = createApp(App)
 
 registerPlugins(app)

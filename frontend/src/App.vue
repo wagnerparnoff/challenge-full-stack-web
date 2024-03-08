@@ -1,11 +1,10 @@
 <template>
-  <v-app>
-    <v-main>
-      <router-view />
-    </v-main>
-  </v-app>
+  <Suspense>
+    <v-app>
+      <sidebar-menu />
+      <v-main>
+        <router-view />
+      </v-main>
+    </v-app>
+  </Suspense>
 </template>
-
-<script setup>
-  //
-</script>
