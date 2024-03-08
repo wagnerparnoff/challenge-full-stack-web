@@ -1,19 +1,36 @@
-import express from 'express';
-import bodyParser from 'body-parser';
+import express from "express";
+import bodyParser from "body-parser";
+import studentRoutes from "./routes/studentRoutes.js";
+import cors from 'cors';
 
 const app = express();
-const PORT = 5000;
 
+// Importando o Sequelize e sincronizando o banco de dados
+import database from './config/sequelize.js';
+import students from './models/studentModel.js';
+(async () => {
+  await database.sync();
+})();
+
+// Middleware para analisar o corpo das solicitações em JSON
 app.use(bodyParser.json());
 
-// app.use("/users", usersRoutes);
+// Permitir todas as origens
+app.use(cors());
 
-// app.get('/', (req, res) => {
-//     console.log('TESTANDO')
+// Rotas relacionadas aos students
+app.use("/api", studentRoutes);
 
-//     res.send('Hello from homepage')
-// });
+// Middleware para tratamento de erros
+app.use((error, req, res, next) => {
+  console.error(error);
+  res.status(500).json({ error: "Erro interno do servidor" });
+});
 
+// Inicialização do servidor
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Servidor rodando na porta ${PORT}`);
+});
 
-app.listen(PORT, () => console.log(`Server running on port: http://localhost:${PORT}`));
-
+export default app;
