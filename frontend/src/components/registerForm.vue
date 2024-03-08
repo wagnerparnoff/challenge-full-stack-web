@@ -48,7 +48,7 @@
 <script setup>
 import { reactive } from "vue";
 import { useVuelidate } from "@vuelidate/core";
-import { email, required } from "@vuelidate/validators";
+import { email, required, minLength, maxLength, numeric } from "@vuelidate/validators";
 import studentsService from "@/services/students";
 
 const initialState = {
@@ -63,10 +63,10 @@ const state = reactive({
 });
 
 const rules = {
-  name: { required },
+  name: { required, minLength: minLength(1), maxLength: maxLength(50), regex: /^[a-zA-Z\s]*$/ },
   email: { required, email },
-  ra: { required },
-  cpf: { required },
+  ra: { required, minLength: minLength(6), maxLength: maxLength(6), numeric },
+  cpf: { required, minLength: minLength(11), maxLength: maxLength(11), numeric }
 };
 
 const v$ = useVuelidate(rules, state);
@@ -81,6 +81,7 @@ function clear() {
 
 async function submitForm() {
   try {
+    formatCPF();
     if (state.id) {
       await studentsService.updateStudent(state.id, state);
       alert("Aluno atualizado com sucesso!");
@@ -93,5 +94,9 @@ async function submitForm() {
     console.error("Erro ao enviar formulário:", error);
     alert("Erro ao enviar formulário. Por favor, tente novamente.");
   }
+}
+
+function formatCPF() {
+  state.cpf = state.cpf.replace(/\D/g, '').replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
 }
 </script>

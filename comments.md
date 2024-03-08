@@ -46,6 +46,7 @@ Manutenção: A separação de responsabilidades torna o código mais fácil de 
 Criaria mais divisão das funções para ter mais reusabilidade.
 Colocaria uma documentação mais completa através do swagger.
 Melhoraria as validações também separando por classes de uso.
+Faria commits mais atribuídos e concisos, não mandaria muitas modicações de uma só vez
 
 ### Quais requisitos obrigatórios que não foram entregues
 Todos foram entregues

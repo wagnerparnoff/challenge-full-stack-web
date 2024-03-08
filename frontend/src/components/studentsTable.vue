@@ -138,7 +138,6 @@ function deleteItemConfirm() {
   try {
     studentService.deleteStudent(editedStudent.value.id);
     studentsData.value = studentsData.value.filter((student) => student.id !== editedStudent.value.id);
-    console.log(studentsData)
   } catch (error) {
     console.error("Erro ao deletar estudante:", error);
   }
